@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Time Illustration of Messaging Between Services</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h2>Real Time Illustration of Messaging Between Services</h2>
+<button onclick="connectWebSocket()">Start Conversation Between Services</button>
+<div id="messages"></div>
+<script>
+    var stompClient;
+
+    function connectWebSocket() {
+        var socket = new SockJS('http://localhost:8080/chat');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function(frame) {
+            console.log('Connected: ' + frame);
+
+            stompClient.send("/chat", {}, "Hello from client!");
+
+            stompClient.subscribe('/topic', function(message) {
+                console.log('Successfully connected to topic');
+                try {
+                    let parsedMessage = JSON.parse(message.body);
+                    showMessage(parsedMessage);
+                } catch (e) {
+                    console.error('Error parsing message:', e);
+                    showMessage(message.body); // Show raw message if parsing fails
+                }
+            });
+
+            // Send a simple string message when connected
+        });
+    }
+
+    function showMessage(message) {
+        var messagesDiv = document.getElementById("messages");
+        var messageElement = document.createElement("p");
+        messageElement.textContent = typeof message === 'string' ? message : JSON.stringify(message);
+        messagesDiv.appendChild(messageElement);
+    }
+</script>
+</body>
+</html>

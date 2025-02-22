@@ -1,0 +1,1 @@
+docker run -d -p 8080:8080 -e KafkaAddr=localhost:9092 alperd411/first-service 
