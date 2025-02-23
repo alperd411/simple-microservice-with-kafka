@@ -1,5 +1,5 @@
-----Kafka instance'ı EC2 Servisinde çalışıyor. MKS ile yapılandırma için vakit bulamadım.
-----İki Servis de ECS(Elastic Container Servis)'de dokcer imajları build edilmiş şekilde çalışıyor.(Sinem hanımın istediği şekilde)
+----Kafka instance'ı EC2 Servisinde çalışıyor. MSK ile yapılandırma için vakit bulamadım.()
+----İki Servis de ECS(Elastic Container Servis)'de dokcer imajları build edilmiş şekilde çalışıyor.
 ----Kafka versiyonu güncellendi(3.8.1)
 
 
